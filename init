@@ -1,0 +1,25 @@
+#!/bin/bash
+# file is now executable
+if [ "$#" -ne 1 ]; then
+    echo "Usage:  init <filename>"
+    exit 62
+fi
+
+ATM_FILE="$1.atm"
+BANK_FILE="$1.bank"
+
+if test -f "$BANK_FILE" || test -f "$ATM_FILE";
+then
+    echo "Error: one of the files already exists"
+    exit 63
+fi
+
+# implement some custom conditions to fail, else initialize
+if (touch "$ATM_FILE" && touch "$BANK_FILE");
+then
+    echo "Successfully initialized bank state"
+    exit 0
+else
+    echo "Error creating initialization files"
+    exit 64
+fi
